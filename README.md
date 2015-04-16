@@ -1,2 +1,2 @@
-# ld32
-Code repository for the 31st installment of the Ludum Dare competition
+# Ludum Dare 32
+Code repository for the 32nd installment of the Ludum Dare competition
