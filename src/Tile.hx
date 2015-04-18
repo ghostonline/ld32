@@ -19,10 +19,13 @@ class Tile extends Entity
         0x817066, //Medium Gray
     ];
 
+    public var typeIdx(default, null):Int;
+
     public function new(type:Int)
     {
         super(0, 0);
         graphic = Image.createRect(20, 20, colors[type]);
+        this.typeIdx = type;
     }
 
 }
