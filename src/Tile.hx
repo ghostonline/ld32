@@ -9,7 +9,7 @@ import com.haxepunk.utils.Ease;
 
 class Tile extends Entity
 {
-    public static inline var NUM_TYPES = 7;
+    public static inline var NUM_TYPES = 4;
 
     static var colors = [
         0xFFB300, //Vivid Yellow
