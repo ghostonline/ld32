@@ -1,0 +1,9 @@
+# Deduce text files automatically
+*           text=auto
+
+# These are text files for sure
+*.hx        text
+*.svg       text
+*.xml       text
+*.text      text
+README      text

@@ -1,0 +1,6 @@
+bin/
+*.swp
+/build.hxml
+.DS_Store
+assets/font/*.hash
+*.sublime-*
