@@ -17,16 +17,18 @@ class TileGenerator
 
     function newBag()
     {
-        for (ii in 0...Tile.NUM_TYPES)
+        for (ii in 1...Tile.NUM_TYPES)
         {
             bag.push(ii);
+            bag.push(ii);
         }
+        bag.push(0);
         HXP.shuffle(bag);
     }
 
     public function createTile()
     {
-        if (bag.length < 1) { newBag(); }
+        if (bag.length < 3) { newBag(); }
         var type = bag.pop();
         return new Tile(type);
     }
