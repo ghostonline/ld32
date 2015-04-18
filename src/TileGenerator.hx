@@ -21,8 +21,9 @@ class TileGenerator
         {
             bag.push(ii);
             bag.push(ii);
+            bag.push(ii);
+            bag.push(0);
         }
-        bag.push(0);
         HXP.shuffle(bag);
     }
 
