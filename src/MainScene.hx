@@ -4,11 +4,20 @@ import com.haxepunk.utils.Input;
 
 typedef Pos = { x:Int, y:Int };
 
+enum State
+{
+    Falling;
+    Swapping;
+    Reacting;
+    Idle;
+}
+
 class MainScene extends Scene
 {
     static inline var ROWS = 10;
     static inline var COLUMNS = 10;
     static inline var TILE_SIZE = 30;
+    static inline var SWAP_DURATION = 0.5;
 
     var board:Array<Tile>;
     var boardX:Float;
@@ -19,6 +28,9 @@ class MainScene extends Scene
     var selectedY:Int;
 
     var dirtyBoard:Bool;
+
+    var state:State;
+    var animationTimeout:Float;
 
 	public override function begin()
 	{
@@ -48,6 +60,8 @@ class MainScene extends Scene
                 setTile(col, row, t);
             }
         }
+
+        state = State.Idle;
 	}
 
     function getTile(x:Int, y:Int)
@@ -56,12 +70,22 @@ class MainScene extends Scene
         return board[x + y * COLUMNS];
     }
 
-    function setTile(x:Int, y:Int, tile:Tile)
+    function setTile(col:Int, row:Int, tile:Tile)
     {
-        if (x < 0 || x >= COLUMNS || y < 0 || y >= ROWS) { return; }
-        tile.x = boardX + x * TILE_SIZE + TILE_SIZE / 2;
-        tile.y = boardY + y * TILE_SIZE + TILE_SIZE / 2;
-        board[x + y * COLUMNS] = tile;
+        if (col < 0 || col >= COLUMNS || row < 0 || row >= ROWS) { return; }
+        tile.x = getTileX(col);
+        tile.y = getTileY(row);
+        board[col + row * COLUMNS] = tile;
+    }
+
+    function getTileX(col:Int)
+    {
+        return boardX + col * TILE_SIZE + TILE_SIZE / 2;
+    }
+
+    function getTileY(row:Int)
+    {
+        return boardY + row * TILE_SIZE + TILE_SIZE / 2;
     }
 
     function setSelected(x:Int, y:Int)
@@ -73,12 +97,27 @@ class MainScene extends Scene
         selectedY = y;
     }
 
+    function moveTileSmoothly(tile:Tile, from:Pos, to:Pos, duration:Float)
+    {
+        tile.x = getTileX(from.x);
+        tile.y = getTileY(from.y);
+        tile.moveAnimated(getTileX(to.x), getTileY(to.y), duration);
+    }
+
     function swapTiles(aX:Int, aY:Int, bX:Int, bY:Int)
     {
+        animationTimeout = SWAP_DURATION;
+
         var a = getTile(aX, aY);
         var b = getTile(bX, bY);
+
         setTile(aX, aY, b);
+        moveTileSmoothly(b, {x:bX, y:bY}, {x:aX, y:aY}, animationTimeout);
+
         setTile(bX, bY, a);
+        moveTileSmoothly(a, {x:aX, y:aY}, {x:bX, y:bY}, animationTimeout);
+
+        state = State.Swapping;
     }
 
     function processMatches()
@@ -142,6 +181,19 @@ class MainScene extends Scene
     override public function update()
     {
         super.update();
+        switch (state)
+        {
+        case State.Idle:
+            updateIdle();
+        case State.Swapping:
+            updateSwapping();
+        default:
+            // Do nothing
+        }
+    }
+
+    function updateIdle()
+    {
 
         if (Input.mousePressed)
         {
@@ -165,11 +217,20 @@ class MainScene extends Scene
                 }
             }
         }
+    }
+
+    function updateSwapping()
+    {
+        animationTimeout -= HXP.elapsed;
+
+        if (animationTimeout > 0) { return; }
 
         if (dirtyBoard)
         {
             dirtyBoard = false;
             processMatches();
         }
+
+        state = State.Idle;
     }
 }

@@ -4,6 +4,8 @@ import com.haxepunk.Entity;
 import com.haxepunk.Graphic;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.Mask;
+import com.haxepunk.tweens.motion.LinearMotion;
+import com.haxepunk.utils.Ease;
 
 class Tile extends Entity
 {
@@ -21,6 +23,7 @@ class Tile extends Entity
 
     public var typeIdx(default, null):Int;
     var image:Image;
+    var motion:LinearMotion;
 
     public function new(type:Int)
     {
@@ -32,6 +35,14 @@ class Tile extends Entity
         this.typeIdx = type;
     }
 
+    public function moveAnimated(x:Float, y:Float, duration:Float)
+    {
+        if (motion != null) { removeTween(motion); }
+        motion = new LinearMotion();
+        motion.setMotion(this.x, this.y, x, y, duration, Ease.cubeInOut);
+        addTween(motion);
+    }
+
     public function setSelected(val:Bool)
     {
         image.angle = val ? 45 : 0;
@@ -40,5 +51,21 @@ class Tile extends Entity
     public function setMatched(val:Bool)
     {
         image.scale = val ? 0.5 : 1;
+    }
+
+    override public function update():Void
+    {
+        super.update();
+        if (motion != null)
+        {
+            x = motion.x;
+            y = motion.y;
+
+            if (!motion.active)
+            {
+                removeTween(motion);
+                motion = null;
+            }
+        }
     }
 }
