@@ -18,7 +18,8 @@ class MainScene extends Scene
     static inline var ROWS = 10;
     static inline var COLUMNS = 10;
     static inline var TILE_SIZE = 30;
-    static inline var SWAP_DURATION = 0.5;
+    static inline var SWAP_DURATION = 0.25;
+    static inline var FALL_DURATION = 0.5;
 
     var generator:TileGenerator;
 
@@ -130,7 +131,7 @@ class MainScene extends Scene
 
     function fallTile(tile:Tile, fromX, fromY, toX, toY)
     {
-        animationTimeout = SWAP_DURATION;
+        animationTimeout = FALL_DURATION;
         var startX = getTileX(fromX);
         var startY = getTileY(fromY);
         var stopX = getTileX(toX);
