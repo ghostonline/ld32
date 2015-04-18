@@ -32,6 +32,9 @@ class MainScene extends Scene
     var state:State;
     var animationTimeout:Float;
 
+    var swapA:Pos;
+    var swapB:Pos;
+
 	public override function begin()
 	{
         board = new Array<Tile>();
@@ -106,16 +109,18 @@ class MainScene extends Scene
 
     function swapTiles(aX:Int, aY:Int, bX:Int, bY:Int)
     {
+        swapA = { x:aX, y:aY };
+        swapB = { x:bX, y:bY };
         animationTimeout = SWAP_DURATION;
 
         var a = getTile(aX, aY);
         var b = getTile(bX, bY);
 
         setTile(aX, aY, b);
-        moveTileSmoothly(b, {x:bX, y:bY}, {x:aX, y:aY}, animationTimeout);
+        moveTileSmoothly(b, swapB, swapA, animationTimeout);
 
         setTile(bX, bY, a);
-        moveTileSmoothly(a, {x:aX, y:aY}, {x:bX, y:bY}, animationTimeout);
+        moveTileSmoothly(a, swapA, swapB, animationTimeout);
 
         state = State.Swapping;
     }
@@ -176,6 +181,8 @@ class MainScene extends Scene
                 tile.setMatched(true);
             }
         }
+
+        return sequences.length > 0;
     }
 
     override public function update()
@@ -225,12 +232,22 @@ class MainScene extends Scene
 
         if (animationTimeout > 0) { return; }
 
+        var swapBack = false;
+
         if (dirtyBoard)
         {
             dirtyBoard = false;
-            processMatches();
+            var hasMatches = processMatches();
+            swapBack = !hasMatches;
         }
 
-        state = State.Idle;
+        if (swapBack)
+        {
+            swapTiles(swapA.x, swapA.y, swapB.x, swapB.y);
+        }
+        else
+        {
+            state = State.Idle;
+        }
     }
 }
