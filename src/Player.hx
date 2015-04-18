@@ -13,6 +13,8 @@ class Player extends Entity
     {
         super(x, y);
         var g = Image.createRect(40, 50);
+        g.originX = g.width / 2;
+        g.originY = g.height;
         graphic = g;
         setHitboxTo(g);
     }
