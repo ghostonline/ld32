@@ -43,6 +43,7 @@ class MainScene extends Scene
 
     var water:Water;
     var waterLevel:Int;
+    var fatPoints:Int;
 
 	public override function begin()
 	{
@@ -224,6 +225,7 @@ class MainScene extends Scene
 
         }
 
+        var grandTotal = 0;
         for (sequence in sequences)
         {
             var points = 0;
@@ -240,9 +242,13 @@ class MainScene extends Scene
             }
 
             if (points > 0) { points -= 2; }
+            else if (points < 0) { fatPoints += points * -1; }
+            grandTotal += points;
 
-            hud.addScore(points);
         }
+
+        hud.addScore(grandTotal);
+        water.setHeight(Math.floor(fatPoints / 10) * TILE_SIZE);
 
         if (sequences.length > 0)
         {
