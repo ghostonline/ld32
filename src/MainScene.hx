@@ -2,6 +2,8 @@ import com.haxepunk.HXP;
 import com.haxepunk.Scene;
 import com.haxepunk.utils.Input;
 
+typedef Pos = { x:Int, y:Int };
+
 class MainScene extends Scene
 {
     static inline var ROWS = 10;
@@ -15,6 +17,8 @@ class MainScene extends Scene
     var selectedTile:Tile;
     var selectedX:Int;
     var selectedY:Int;
+
+    var dirtyBoard:Bool;
 
 	public override function begin()
 	{
@@ -77,6 +81,64 @@ class MainScene extends Scene
         setTile(bX, bY, a);
     }
 
+    function processMatches()
+    {
+        var sequences = new Array<Array<Pos>>();
+
+        // Horizontal matches
+        for (row in 0...ROWS)
+        {
+            var type = -1;
+            var sequence = new Array<Pos>();
+            for (col in 0...COLUMNS)
+            {
+                var tile = getTile(col, row);
+                if (tile.typeIdx != type)
+                {
+                    if (sequence.length >= 3)
+                    {
+                        sequences.push(sequence);
+                    }
+                    type = tile.typeIdx;
+                    sequence = new Array<Pos>();
+                }
+
+                sequence.push( { x:col, y:row } );
+            }
+        }
+
+        // Vertical matches
+        for (col in 0...COLUMNS)
+        {
+            var type = -1;
+            var sequence = new Array<Pos>();
+            for (row in 0...ROWS)
+            {
+                var tile = getTile(col, row);
+                if (tile.typeIdx != type)
+                {
+                    if (sequence.length >= 3)
+                    {
+                        sequences.push(sequence);
+                    }
+                    type = tile.typeIdx;
+                    sequence = new Array<Pos>();
+                }
+
+                sequence.push( { x:col, y:row } );
+            }
+        }
+
+        for (sequence in sequences)
+        {
+            for (pos in sequence)
+            {
+                var tile = getTile(pos.x, pos.y);
+                tile.setMatched(true);
+            }
+        }
+    }
+
     override public function update()
     {
         super.update();
@@ -98,8 +160,16 @@ class MainScene extends Scene
                     swapTiles(tileX, tileY, selectedX, selectedY);
                     selectedTile.setSelected(false);
                     selectedTile = null;
+
+                    dirtyBoard = !(tileX == selectedX && tileY == selectedY);
                 }
             }
+        }
+
+        if (dirtyBoard)
+        {
+            dirtyBoard = false;
+            processMatches();
         }
     }
 }

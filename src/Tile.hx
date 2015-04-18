@@ -36,4 +36,9 @@ class Tile extends Entity
     {
         image.angle = val ? 45 : 0;
     }
+
+    public function setMatched(val:Bool)
+    {
+        image.scale = val ? 0.5 : 1;
+    }
 }
