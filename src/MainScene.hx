@@ -53,11 +53,8 @@ class MainScene extends Scene
                 var top = [getTile(col, row - 1), getTile(col, row - 2)];
                 var prev = [getTile(col - 1, row), getTile(col - 2, row)];
                 var t = generator.createTile();
-                while (
-                        (row > 1 && col > 1) &&
-                        ((prev[0].typeIdx == t.typeIdx && prev[1].typeIdx == t.typeIdx) ||
-                        (top[0].typeIdx == t.typeIdx && top[1].typeIdx == t.typeIdx))
-                        )
+                while ((row > 1 && (top[0].typeIdx == t.typeIdx && top[1].typeIdx == t.typeIdx)) ||
+                      (col > 1 && (prev[0].typeIdx == t.typeIdx && prev[1].typeIdx == t.typeIdx)))
                        {
                            t = generator.createTile();
                        }
