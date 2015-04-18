@@ -81,6 +81,12 @@ class MainScene extends Scene
         state = State.Idle;
 	}
 
+    function setWaterLevel(level:Int)
+    {
+        waterLevel = level;
+        water.setHeight(level * TILE_SIZE);
+    }
+
     function getTile(x:Int, y:Int)
     {
         if (x < 0 || x >= COLUMNS || y < 0 || y >= ROWS) { return null; }
@@ -248,7 +254,7 @@ class MainScene extends Scene
         }
 
         hud.addScore(grandTotal);
-        water.setHeight(Math.floor(fatPoints / 10) * TILE_SIZE);
+        setWaterLevel(Math.floor(fatPoints / 10));
 
         if (sequences.length > 0)
         {
