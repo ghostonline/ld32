@@ -308,10 +308,14 @@ class MainScene extends Scene
     function updateIdle()
     {
 
-        if (Input.mousePressed)
+        if (Input.mousePressed || (Input.mouseDown && selectedTile != null))
         {
             var tileX = Math.floor((Input.mouseX - boardX) / TILE_SIZE);
             var tileY = Math.floor((Input.mouseY - boardY) / TILE_SIZE);
+            var dragAction = Input.mouseDown && selectedTile != null && !(tileX == selectedX && tileY == selectedY);
+
+            var swapRangeX = Math.abs(tileX - selectedX);
+            var swapRangeY = Math.abs(tileY - selectedY);
 
             var tile = getTile(tileX, tileY);
             if (tile != null)
@@ -320,13 +324,18 @@ class MainScene extends Scene
                 {
                     setSelected(tileX, tileY);
                 }
-                else if (tileX == selectedX || tileY == selectedY)
+                else if (swapRangeX <= 1 && swapRangeY <= 1 && dragAction)
                 {
                     swapTiles(tileX, tileY, selectedX, selectedY);
                     selectedTile.setSelected(false);
                     selectedTile = null;
 
                     dirtyBoard = !(tileX == selectedX && tileY == selectedY);
+                }
+                else if (swapRangeX == 0 && swapRangeY == 0 && Input.mousePressed)
+                {
+                    selectedTile.setSelected(false);
+                    selectedTile = null;
                 }
             }
         }
