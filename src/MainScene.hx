@@ -204,8 +204,11 @@ class MainScene extends Scene
             for (pos in sequence)
             {
                 var tile = getTile(pos.x, pos.y);
-                setTile(pos.x, pos.y, null);
-                remove(tile);
+                if (tile != null)
+                {
+                    setTile(pos.x, pos.y, null);
+                    remove(tile);
+                }
             }
         }
 
