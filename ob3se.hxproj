@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <project version="2">
   <!-- Output SWF options -->
   <output>
@@ -6,7 +6,7 @@
     <movie input="" />
     <movie path="project.xml" />
     <movie fps="60" />
-    <movie width="640" />
+    <movie width="480" />
     <movie height="480" />
     <movie version="3" />
     <movie minorVersion="0" />
@@ -15,20 +15,24 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
+    <class path="C:\HaxeToolkit\haxe\lib\HaxePunk\2,5,3" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\3,0,2" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\2,3,2" />
     <class path="src" />
     <class path="bin\flash\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="tools=1.2.1&#xA;openfl=1.2.3&#xA;display&#xA;web" />
+    <option directives="HaxePunk=2.5.3&#xA;openfl=3.0.2&#xA;lime=2.3.2&#xA;openfl-next&#xA;tools=2.3.2&#xA;no-compilation&#xA;openfl-flash&#xA;web" />
     <option flashStrict="False" />
+    <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="False" />
-    <option additional="--no-output&#xA;-swf-version 11.2" />
+    <option additional="-swf-version 11.2" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
-    <library name="HaxePunk" />
+    <!-- example: <library name="..." /> -->
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
