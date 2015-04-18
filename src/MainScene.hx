@@ -39,8 +39,13 @@ class MainScene extends Scene
     var swapA:Pos;
     var swapB:Pos;
 
+    var hud:Hud;
+
 	public override function begin()
 	{
+        hud = new Hud(30);
+        add(hud);
+
         board = new Array<Tile>();
 
         generator = new TileGenerator();
@@ -214,15 +219,22 @@ class MainScene extends Scene
 
         for (sequence in sequences)
         {
+            var points = 0;
             for (pos in sequence)
             {
                 var tile = getTile(pos.x, pos.y);
                 if (tile != null)
                 {
+                    if (tile.typeIdx > 0) { points += 1; }
+                    else { points -= 1; }
                     setTile(pos.x, pos.y, null);
                     remove(tile);
                 }
             }
+
+            if (points > 0) { points -= 2; }
+
+            hud.addScore(points);
         }
 
         if (sequences.length > 0)
