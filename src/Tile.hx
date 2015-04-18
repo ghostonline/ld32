@@ -20,12 +20,20 @@ class Tile extends Entity
     ];
 
     public var typeIdx(default, null):Int;
+    var image:Image;
 
     public function new(type:Int)
     {
         super(0, 0);
-        graphic = Image.createRect(20, 20, colors[type]);
+        image = Image.createRect(20, 20, colors[type]);
+        image.centerOrigin();
+        graphic = image;
+        setHitboxTo(image);
         this.typeIdx = type;
     }
 
+    public function setSelected(val:Bool)
+    {
+        image.angle = val ? 45 : 0;
+    }
 }
