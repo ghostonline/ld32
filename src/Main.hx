@@ -10,6 +10,8 @@ class Main extends Engine
 	{
 #if debug
 		HXP.console.enable();
+
+        trace ("Seed " + HXP.randomSeed);
 #end
 		HXP.scene = new MainScene();
 	}
