@@ -12,11 +12,12 @@ class Tile extends Entity
     public static inline var NUM_TYPES = 4;
 
     static var colors = [
+        0x111111, //Near black
+        0xA6BDD7, //Very Light Blue
+        0xC10020, //Vivid Red
         0xFFB300, //Vivid Yellow
         0x803E75, //Strong Purple
         0xFF6800, //Vivid Orange
-        0xA6BDD7, //Very Light Blue
-        0xC10020, //Vivid Red
         0xCEA262, //Grayish Yellow
         0x817066, //Medium Gray
     ];
