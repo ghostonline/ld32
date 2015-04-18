@@ -41,6 +41,9 @@ class MainScene extends Scene
 
     var hud:Hud;
 
+    var water:Water;
+    var waterLevel:Int;
+
 	public override function begin()
 	{
         hud = new Hud(30);
@@ -69,6 +72,10 @@ class MainScene extends Scene
                 setTile(col, row, t);
             }
         }
+
+        water = new Water(boardX, boardY + ROWS * TILE_SIZE, COLUMNS * TILE_SIZE);
+        add(water);
+        waterLevel = 0;
 
         state = State.Idle;
 	}
@@ -303,6 +310,18 @@ class MainScene extends Scene
             trace("State: " + state);
             dumpBoard();
         }
+
+        if (Input.pressed("debug_b"))
+        {
+            ++waterLevel;
+            water.setHeight(TILE_SIZE * waterLevel);
+        }
+
+        if (Input.pressed("debug_c"))
+        {
+            --waterLevel;
+            water.setHeight(TILE_SIZE * waterLevel);
+        }
     }
 
     function updateIdle()
@@ -320,11 +339,11 @@ class MainScene extends Scene
             var tile = getTile(tileX, tileY);
             if (tile != null)
             {
-                if (selectedTile == null)
+                if (selectedTile == null && tileY < ROWS - waterLevel)
                 {
                     setSelected(tileX, tileY);
                 }
-                else if (swapRangeX <= 1 && swapRangeY <= 1 && dragAction)
+                else if (swapRangeX <= 1 && swapRangeY <= 1 && dragAction && tileY < ROWS - waterLevel)
                 {
                     swapTiles(tileX, tileY, selectedX, selectedY);
                     selectedTile.setSelected(false);
