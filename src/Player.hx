@@ -8,6 +8,7 @@ import com.haxepunk.utils.Input;
 class Player extends Entity
 {
     inline static var SPEED = 5.0;
+    inline static var ARENA_BORDER = 30;
 
     public function new(x:Float=0, y:Float=0)
     {
@@ -43,6 +44,8 @@ class Player extends Entity
         HXP.point.normalize(SPEED);
 
         moveBy(HXP.point.x, HXP.point.y);
+
+        HXP.clampInRect(this, ARENA_BORDER, ARENA_BORDER, HXP.screen.width - ARENA_BORDER * 2, HXP.screen.height - ARENA_BORDER * 2);
     }
 
 }
