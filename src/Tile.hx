@@ -32,6 +32,7 @@ class Tile extends Entity
         image.centerOrigin();
         graphic = image;
         setHitboxTo(image);
+        layer = ZOrder.Board.getIndex();
         this.typeIdx = type;
     }
 
@@ -41,6 +42,7 @@ class Tile extends Entity
         motion = new LinearMotion();
         motion.setMotion(this.x, this.y, x, y, duration, Ease.cubeInOut);
         addTween(motion);
+        layer = ZOrder.MovingTiles.getIndex();
     }
 
     public function setSelected(val:Bool)
@@ -60,6 +62,7 @@ class Tile extends Entity
             {
                 removeTween(motion);
                 motion = null;
+                layer = ZOrder.Board.getIndex();
             }
         }
     }
