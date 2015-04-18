@@ -131,9 +131,24 @@ class MainScene extends Scene
     function fallTile(tile:Tile, fromX, fromY, toX, toY)
     {
         animationTimeout = SWAP_DURATION;
-        setTile(fromX, fromY, null);
+        var startX = getTileX(fromX);
+        var startY = getTileY(fromY);
+        var stopX = getTileX(toX);
+        var stopY = getTileY(toY);
+        if (fromX > -1)
+        {
+            setTile(fromX, fromY, null);
+        }
+        else
+        {
+            startX = stopX;
+            startY = (startY - boardY) - TILE_SIZE;
+        }
+
         setTile(toX, toY, tile);
-        moveTileSmoothly(tile, { x:fromX, y:fromY }, { x:toX, y:toY }, animationTimeout );
+        tile.x = startX;
+        tile.y = startY;
+        tile.moveAnimated(stopX, stopY, animationTimeout);
     }
 
     function processMatches()
@@ -222,7 +237,7 @@ class MainScene extends Scene
                         var tile = generator.createTile();
                         add(tile);
                         setTile(col, row, tile);
-                        //fallTile(tile, -1, -1, col, newTile);
+                        fallTile(tile, -1, -1, col, row);
                     }
                 }
             }
