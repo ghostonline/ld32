@@ -35,7 +35,6 @@ class Hud extends Entity
     public function addScore(points:Int)
     {
         fat = Math.round(HXP.clamp(fat - points, 0, maxFat));
-        trace(fat);
         updateGUI();
     }
 
