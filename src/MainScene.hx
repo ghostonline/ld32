@@ -175,6 +175,12 @@ class MainScene extends Scene
 
                 sequence.push( { x:col, y:row } );
             }
+
+            if (sequence.length >= 3)
+            {
+                sequences.push(sequence);
+            }
+
         }
 
         // Vertical matches
@@ -197,6 +203,12 @@ class MainScene extends Scene
 
                 sequence.push( { x:col, y:row } );
             }
+
+            if (sequence.length >= 3)
+            {
+                sequences.push(sequence);
+            }
+
         }
 
         for (sequence in sequences)
@@ -271,6 +283,13 @@ class MainScene extends Scene
         default:
             // Do nothing
         }
+
+
+        if (Input.pressed("debug_a"))
+        {
+            trace("State: " + state);
+            dumpBoard();
+        }
     }
 
     function updateIdle()
@@ -312,15 +331,13 @@ class MainScene extends Scene
         {
             dirtyBoard = false;
             var hasMatches = processMatches();
-            swapBack = !hasMatches;
+            if (!hasMatches)
+            {
+                swapTiles(swapA.x, swapA.y, swapB.x, swapB.y);
+                state = State.Reverting;
+            }
         }
-
-        if (swapBack && state != State.Reverting)
-        {
-            swapTiles(swapA.x, swapA.y, swapB.x, swapB.y);
-            state = State.Reverting;
-        }
-        else if (state == State.Reverting)
+        else
         {
             state = State.Idle;
         }
@@ -333,5 +350,26 @@ class MainScene extends Scene
         if (animationTimeout > 0) { return; }
 
         processMatches(); // Keep processing matches until done
+    }
+
+    function dumpBoard()
+    {
+        trace("==== board dump ====");
+        for (row in 0...ROWS)
+        {
+            var indices = new Array<String>();
+            for (col in 0...COLUMNS)
+            {
+                var tile = getTile(col, row);
+                var symbol = "-";
+                if (tile != null)
+                {
+                    symbol = "" + tile.typeIdx;
+                }
+                indices.push(symbol);
+            }
+            trace(indices.join(""));
+        }
+        trace("====================");
     }
 }

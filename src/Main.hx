@@ -12,6 +12,8 @@ class Main extends Engine
 		HXP.console.enable();
 
         trace ("Seed " + HXP.randomSeed);
+
+        Input.define("debug_a", [Key.DIGIT_1]);
 #end
 		HXP.scene = new MainScene();
 	}
