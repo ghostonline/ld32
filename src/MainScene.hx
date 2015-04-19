@@ -376,6 +376,11 @@ class MainScene extends Scene
             state = State.Idle;
         }
 
+        if (hud.fat == 0)
+        {
+            triggerVictory();
+        }
+
         return sequences.length > 0;
     }
 
