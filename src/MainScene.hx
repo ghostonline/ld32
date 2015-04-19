@@ -355,7 +355,7 @@ class MainScene extends Scene
                 {
                     setSelected(tileX, tileY);
                 }
-                else if (swapRangeX <= 1 && swapRangeY <= 1 && dragAction && tileY < ROWS - waterLevel)
+                else if (swapRangeX <= 1 && swapRangeY <= 1 && swapRangeX != swapRangeY && dragAction && tileY < ROWS - waterLevel)
                 {
                     swapTiles(tileX, tileY, selectedX, selectedY);
                     selectedTile.setSelected(false);
