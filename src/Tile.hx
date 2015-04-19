@@ -11,15 +11,12 @@ class Tile extends Entity
 {
     public static inline var NUM_TYPES = 5;
 
-    static var colors = [
-        0x111111, //Near black
-        0xA6BDD7, //Very Light Blue
-        0xC10020, //Vivid Red
-        0xFFB300, //Vivid Yellow
-        0x803E75, //Strong Purple
-        0xFF6800, //Vivid Orange
-        0xCEA262, //Grayish Yellow
-        0x817066, //Medium Gray
+    static var images = [
+        "burger",
+        "apple",
+        "banana",
+        "carrot",
+        "pear",
     ];
 
     public var typeIdx(default, null):Int;
@@ -29,11 +26,20 @@ class Tile extends Entity
     public function new(type:Int)
     {
         super(0, 0);
-        image = Image.createRect(20, 20, colors[type]);
+        image = new Image("graphics/" + images[type] + ".png");
         image.centerOrigin();
-        graphic = image;
+        image.originY = image.height - 3;
+        var shadow = new Image("graphics/shadow.png");
+        shadow.centerOrigin();
+        shadow.alpha = 0.5;
+        shadow.originY -= 4;
+        image.y = shadow.y = 16;
+
+        addGraphic(shadow);
+        addGraphic(image);
+
         setHitboxTo(image);
-        layer = ZOrder.Board.getIndex();
+        layer = ZOrder.Tiles.getIndex();
         this.typeIdx = type;
     }
 
