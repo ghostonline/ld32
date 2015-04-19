@@ -15,6 +15,7 @@ class Hud extends Entity
     var maxFat:Int;
     var fatBar:Bar;
     var fatBarWidth:Int;
+    var heart:Image;
 
     public function new(maxFat:Int)
     {
@@ -40,6 +41,13 @@ class Hud extends Entity
             fatBar.y = barY;
             addGraphic(fatBar);
         }
+
+        heart = new Image("graphics/heart.png");
+        heart.centerOrigin();
+        heart.x = barX;
+        heart.y = barY + 1;
+        addGraphic(heart);
+
 
         updateGUI();
     }
