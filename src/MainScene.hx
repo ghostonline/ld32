@@ -69,6 +69,7 @@ class MainScene extends Scene
         addGraphic(title);
 
         hud = new Hud(30);
+        hud.layer = ZOrder.HUD.getIndex();
         add(hud);
 
         var bg = new Image("graphics/board.png");
@@ -347,7 +348,8 @@ class MainScene extends Scene
                     if (tile.typeIdx > 0) { points += 1; }
                     else { points -= 1; }
                     setTile(pos.x, pos.y, null);
-                    remove(tile);
+                    tile.moveAnimated(50, 45, 0.5);
+                    tile.layer = ZOrder.ReactingTiles.getIndex();
                 }
             }
 
