@@ -6,7 +6,7 @@ import com.haxepunk.HXP;
 
 class Water extends Entity
 {
-    inline static var SPEED = 500.0;
+    inline static var SPEED = 250.0;
 
     var img:Image;
     var targetHeight:Int;
