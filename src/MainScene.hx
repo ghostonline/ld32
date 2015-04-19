@@ -348,7 +348,7 @@ class MainScene extends Scene
                     if (tile.typeIdx > 0) { points += 1; }
                     else { points -= 1; }
                     setTile(pos.x, pos.y, null);
-                    tile.moveAnimated(50, 45, 0.5);
+                    tile.moveAnimated(50, 45, 0.5, true);
                     tile.layer = ZOrder.ReactingTiles.getIndex();
                 }
             }

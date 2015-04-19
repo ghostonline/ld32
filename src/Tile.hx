@@ -26,6 +26,7 @@ class Tile extends Entity
     var image:Image;
     var motion:LinearMotion;
     var wiggle:CircularMotion;
+    var killWhenFinished:Bool;
 
     public function new(type:Int)
     {
@@ -48,13 +49,14 @@ class Tile extends Entity
 
     }
 
-    public function moveAnimated(x:Float, y:Float, duration:Float)
+    public function moveAnimated(x:Float, y:Float, duration:Float, ?killWhenFinished:Bool)
     {
         if (motion != null) { removeTween(motion); }
         motion = new LinearMotion();
         motion.setMotion(this.x, this.y, x, y, duration, Ease.cubeInOut);
         addTween(motion);
         layer = ZOrder.MovingTiles.getIndex();
+        this.killWhenFinished = killWhenFinished != null && killWhenFinished;
     }
 
     public function setSelected(val:Bool)
@@ -87,6 +89,10 @@ class Tile extends Entity
                 removeTween(motion);
                 motion = null;
                 layer = ZOrder.Board.getIndex();
+                if (killWhenFinished)
+                {
+                    scene.remove(this);
+                }
             }
         }
 
