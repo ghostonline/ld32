@@ -45,6 +45,8 @@ class MainScene extends Scene
     var waterLevel:Int;
     var fatPoints:Int;
 
+    var combo:Int;
+
 	public override function begin()
 	{
         hud = new Hud(30);
@@ -232,6 +234,14 @@ class MainScene extends Scene
         }
 
         var grandTotal = 0;
+
+        // Calculate combo multiplier
+        for (sequence in sequences)
+        {
+            var tile = getTile(sequence[0].x, sequence[1].y);
+            if (tile != null && tile.typeIdx > 0) { ++combo; }
+        }
+
         for (sequence in sequences)
         {
             var points = 0;
@@ -247,11 +257,14 @@ class MainScene extends Scene
                 }
             }
 
-            if (points > 0) { points -= 2; }
+            if (points > 0) { points -= 2; points *= combo; }
             else if (points < 0) { fatPoints += points * -1; }
+
             grandTotal += points;
 
         }
+
+        trace("Points earned: " + grandTotal + ", multiplier " + combo);
 
         hud.addScore(grandTotal);
         setWaterLevel(Math.floor(fatPoints / 10));
@@ -338,6 +351,7 @@ class MainScene extends Scene
 
     function updateIdle()
     {
+        combo = 0;
 
         if (Input.mousePressed || (Input.mouseDown && selectedTile != null))
         {
