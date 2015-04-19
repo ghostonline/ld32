@@ -2,6 +2,7 @@ import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 import com.haxepunk.Scene;
+import com.haxepunk.Sfx;
 import com.haxepunk.utils.Input;
 
 typedef Pos = { x:Int, y:Int };
@@ -28,6 +29,7 @@ class MainScene extends Scene
     static inline var FALL_DURATION = 0.5;
 
     var generator:TileGenerator;
+    var music:Sfx;
 
     var board:Array<Tile>;
     var boardX:Float;
@@ -56,6 +58,10 @@ class MainScene extends Scene
 
 	public override function begin()
 	{
+        music = new Sfx("audio/bgm.mp3");
+        music.volume = 0.5;
+        music.play();
+
         title = new Image("graphics/title.png");
         title.centerOrigin();
         title.x = HXP.halfWidth;
