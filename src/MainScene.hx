@@ -360,7 +360,9 @@ class MainScene extends Scene
 
         }
 
+#if debug
         trace("Points earned: " + grandTotal + ", multiplier " + combo);
+#end
 
         hud.addScore(grandTotal);
         //setWaterLevel(Math.floor(fatPoints / 10));
