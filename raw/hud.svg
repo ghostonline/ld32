@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="hud.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.28"
+     inkscape:cx="184.56275"
+     inkscape:cy="861.64341"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-bbox="false"
+     inkscape:bbox-paths="false"
+     inkscape:snap-global="true"
+     inkscape:bbox-nodes="false"
+     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="false"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:window-width="1680"
+     inkscape:window-height="988"
+     inkscape:window-x="1272"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g4148"
+       transform="translate(-25.253814,-143.44166)"
+       inkscape:export-filename="C:\Users\Bart\Desktop\ld32\assets\graphics\bar_outline.png"
+       inkscape:export-xdpi="53.015507"
+       inkscape:export-ydpi="53.015507">
+      <circle
+         r="61.114227"
+         cy="230.6031"
+         cx="114.14724"
+         id="path4142"
+         style="fill:#ff7f2a;stroke:none" />
+      <circle
+         style="fill:#d45500;stroke:none"
+         id="circle4144"
+         cx="114.14724"
+         cy="230.6031"
+         r="46.972092" />
+    </g>
+    <circle
+       style="fill:#88aa00;stroke:none"
+       id="circle4146"
+       cx="88.893425"
+       cy="87.161446"
+       r="39.648483"
+       inkscape:export-filename="C:\Users\Bart\Desktop\ld32\assets\graphics\bar_inner.png"
+       inkscape:export-xdpi="53.343761"
+       inkscape:export-ydpi="53.343761" />
+    <g
+       id="g4215"
+       transform="matrix(0.8818867,0,0,0.8818867,-150.25374,-47.143637)"
+       inkscape:export-filename="C:\Users\Bart\Desktop\ld32\assets\graphics\heart.png"
+       inkscape:export-xdpi="53.4151"
+       inkscape:export-ydpi="53.4151">
+      <g
+         style="fill:#ececec"
+         id="g4191"
+         transform="matrix(0.81869076,0,0,0.85278971,61.163885,70.145569)">
+        <circle
+           r="30.46875"
+           cy="91.306915"
+           cx="241.28847"
+           id="circle4193"
+           style="fill:#ececec;stroke:none" />
+        <circle
+           style="fill:#ececec;stroke:none"
+           id="circle4195"
+           cx="271.75723"
+           cy="91.306915"
+           r="30.46875" />
+        <path
+           sodipodi:nodetypes="zzzz"
+           inkscape:connector-curvature="0"
+           id="path4197"
+           d="m 210.81972,91.306919 c -0.0992,-30.134162 91.44465,-30.569195 91.40625,0 -0.0384,30.569191 -41.28898,45.871391 -45.3125,45.703121 -4.02352,-0.16827 -45.99458,-15.56896 -46.09375,-45.703121 z"
+           style="fill:#ececec;stroke:none" />
+      </g>
+      <g
+         transform="matrix(0.66759972,0,0,0.69540564,99.922183,86.23786)"
+         id="g4178">
+        <circle
+           style="fill:#c83737;stroke:none"
+           id="path4168"
+           cx="241.28847"
+           cy="91.306915"
+           r="30.46875" />
+        <circle
+           r="30.46875"
+           cy="91.306915"
+           cx="271.75723"
+           id="circle4170"
+           style="fill:#c83737;stroke:none" />
+        <path
+           style="fill:#c83737;stroke:none"
+           d="m 210.81972,91.306919 c -0.0992,-30.134162 91.44465,-30.569195 91.40625,0 -0.0384,30.569191 -41.28898,45.871391 -45.3125,45.703121 -4.02352,-0.16827 -45.99458,-15.56896 -46.09375,-45.703121 z"
+           id="rect4175"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="zzzz" />
+      </g>
+    </g>
+  </g>
+</svg>
