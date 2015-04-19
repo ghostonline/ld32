@@ -308,7 +308,7 @@ class MainScene extends Scene
             for (pos in sequence)
             {
                 var tile = getTile(pos.x, pos.y);
-                //if (tile != null)
+                if (tile != null) // Somehow this still happens, so we have to check for it
                 {
                     if (tile.typeIdx > 0) { points += 1; }
                     else { points -= 1; }
