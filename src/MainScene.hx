@@ -334,7 +334,7 @@ class MainScene extends Scene
         trace("Points earned: " + grandTotal + ", multiplier " + combo);
 
         hud.addScore(grandTotal);
-        setWaterLevel(Math.floor(fatPoints / 10));
+        //setWaterLevel(Math.floor(fatPoints / 10));
 
         if (sequences.length > 0)
         {
