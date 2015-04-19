@@ -1,3 +1,4 @@
+import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 import com.haxepunk.Scene;
 import com.haxepunk.utils.Input;
@@ -17,9 +18,9 @@ enum State
 
 class MainScene extends Scene
 {
-    static inline var ROWS = 10;
-    static inline var COLUMNS = 10;
-    static inline var TILE_SIZE = 30;
+    static inline var ROWS = 9;
+    static inline var COLUMNS = 9;
+    static inline var TILE_SIZE = 48;
     static inline var SWAP_DURATION = 0.25;
     static inline var FALL_DURATION = 0.5;
 
@@ -53,6 +54,13 @@ class MainScene extends Scene
 	{
         hud = new Hud(30);
         add(hud);
+
+        var bg = new Image("graphics/board.png");
+        bg.centerOrigin();
+        var bgE = addGraphic(bg);
+        bgE.layer = ZOrder.Board.getIndex();
+        bgE.x = HXP.halfWidth;
+        bgE.y = HXP.halfHeight;
 
         board = new Array<Tile>();
 
