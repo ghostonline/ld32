@@ -32,7 +32,7 @@ class Hud extends Entity
         beat = 0;
 
         var barX = 50;
-        var barY = 60;
+        var barY = 45;
         fatBarWidth = HXP.width - barX * 2;
         graphic = new Graphiclist();
 

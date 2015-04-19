@@ -19,7 +19,7 @@ enum State
 
 class MainScene extends Scene
 {
-    static inline var ROWS = 9;
+    static inline var ROWS = 8;
     static inline var COLUMNS = 9;
     static inline var TILE_SIZE = 48;
     static inline var SWAP_DURATION = 0.25;
@@ -68,7 +68,7 @@ class MainScene extends Scene
         generator = new TileGenerator();
 
         boardX = (HXP.width - TILE_SIZE * COLUMNS) / 2;
-        boardY = (HXP.height - TILE_SIZE * ROWS) / 2;
+        boardY = (HXP.height - TILE_SIZE * ROWS) / 2 + 40;
         for (row in 0...ROWS)
         {
             for (col in 0...COLUMNS)
@@ -436,6 +436,11 @@ class MainScene extends Scene
         if (Input.pressed("debug_e"))
         {
             triggerVictory();
+        }
+
+        if (Input.pressed("debug_f"))
+        {
+            HXP.console.visible = !HXP.console.visible;
         }
     }
 
