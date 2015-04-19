@@ -14,6 +14,7 @@ enum State
     Reacting;
     Reverting;
     Idle;
+    Victory;
 }
 
 class MainScene extends Scene
@@ -188,6 +189,12 @@ class MainScene extends Scene
         tile.x = startX;
         tile.y = startY;
         tile.moveAnimated(stopX, stopY, animationTimeout);
+    }
+
+    function triggerVictory()
+    {
+        state = State.Victory;
+        hud.showVictory();
     }
 
     function processMatches()
@@ -419,6 +426,11 @@ class MainScene extends Scene
                 add(tile);
                 setTile(tileXY.x, tileXY.y, tile);
             }
+        }
+
+        if (Input.pressed("debug_e"))
+        {
+            triggerVictory();
         }
     }
 

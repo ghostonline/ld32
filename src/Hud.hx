@@ -3,6 +3,8 @@ package ;
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Text;
 import com.haxepunk.HXP;
+import com.haxepunk.tweens.misc.NumTween;
+import com.haxepunk.utils.Ease;
 import openfl.geom.Rectangle;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.graphics.Graphiclist;
@@ -18,6 +20,9 @@ class Hud extends Entity
     var fatBarWidth:Int;
     var heart:Image;
     var beat:Float;
+
+    var victory:Image;
+    var victoryTween:NumTween;
 
     public function new(maxFat:Int)
     {
@@ -51,6 +56,14 @@ class Hud extends Entity
         heart.y = barY + 1;
         addGraphic(heart);
 
+        victory = new Image("graphics/victory.png");
+        victory.centerOrigin();
+        victory.x = HXP.halfWidth;
+        victory.y = HXP.halfHeight;
+        victory.visible = false;
+        addGraphic(victory);
+        victoryTween = new NumTween();
+        addTween(victoryTween);
 
         updateGUI();
     }
@@ -72,6 +85,13 @@ class Hud extends Entity
         updateGUI();
     }
 
+    public function showVictory()
+    {
+        victory.scale = 0.5;
+        victoryTween.tween(victory.scale, 1.0, 0.5, Ease.bounceOut);
+        victory.visible = true;
+    }
+
     override public function update():Void
     {
         super.update();
@@ -80,5 +100,7 @@ class Hud extends Entity
         while (beat > 1) { beat -= 1; }
         var hScale = 1 - 0.1 * beatFunc(beat * 3);
         heart.scale = hScale;
+
+        victory.scale = victoryTween.value;
     }
 }
