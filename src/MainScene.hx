@@ -61,6 +61,9 @@ class MainScene extends Scene
         music = new Sfx("audio/bgm.mp3");
         music.volume = 0.5;
         music.play();
+#if debug
+        music.volume = 0;
+#end
 
         title = new Image("graphics/title.png");
         title.centerOrigin();
