@@ -473,6 +473,12 @@ class MainScene extends Scene
         {
             HXP.console.visible = !HXP.console.visible;
         }
+
+        if (Input.pressed("mute"))
+        {
+            music.volume = music.volume < 0.5 ? 0.75 : 0;
+        }
+
     }
 
     function updateIdle()

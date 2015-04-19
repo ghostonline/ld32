@@ -20,6 +20,8 @@ class Main extends Engine
         Input.define("debug_e", [Key.DIGIT_5]);
         Input.define("debug_f", [Key.DIGIT_6]);
 #end
+        Input.define("mute", [Key.M]);
+
 		HXP.scene = new MainScene();
 	}
 
