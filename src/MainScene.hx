@@ -1,3 +1,4 @@
+import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 import com.haxepunk.Scene;
@@ -9,6 +10,7 @@ typedef MatchMerge = { h:Match, v:Match };
 
 enum State
 {
+    Title;
     Falling;
     Swapping;
     Reacting;
@@ -50,9 +52,16 @@ class MainScene extends Scene
     var fatPoints:Int;
 
     var combo:Int;
+    var title:Image;
 
 	public override function begin()
 	{
+        title = new Image("graphics/title.png");
+        title.centerOrigin();
+        title.x = HXP.halfWidth;
+        title.y = HXP.halfHeight;
+        addGraphic(title);
+
         hud = new Hud(30);
         add(hud);
 
@@ -91,8 +100,20 @@ class MainScene extends Scene
         add(water);
         waterLevel = 0;
 
-        state = State.Idle;
+        state = State.Title;
+        setTitleVisible(true);
 	}
+
+    function setTitleVisible(visible:Bool)
+    {
+        hud.visible = !visible;
+        title.visible = visible;
+
+        for (tile in board)
+        {
+            tile.visible = !visible;
+        }
+    }
 
     function setWaterLevel(level:Int)
     {
@@ -389,6 +410,8 @@ class MainScene extends Scene
         super.update();
         switch (state)
         {
+        case State.Title:
+            if (Input.mousePressed) { setTitleVisible(false); state = State.Idle; }
         case State.Idle:
             updateIdle();
         case State.Swapping:

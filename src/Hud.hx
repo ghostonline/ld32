@@ -24,6 +24,8 @@ class Hud extends Entity
     var victory:Image;
     var victoryTween:NumTween;
 
+    var title:Image;
+
     public function new(maxFat:Int)
     {
         super();
