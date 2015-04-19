@@ -3,6 +3,8 @@ import com.haxepunk.Scene;
 import com.haxepunk.utils.Input;
 
 typedef Pos = { x:Int, y:Int };
+typedef Match = Array<Pos>;
+typedef MatchMerge = { h:Match, v:Match };
 
 enum State
 {
@@ -116,6 +118,13 @@ class MainScene extends Scene
         return boardY + row * TILE_SIZE + TILE_SIZE / 2;
     }
 
+    function pickTile(x:Float, y:Float)
+    {
+        var tileX = Math.floor((x - boardX) / TILE_SIZE);
+        var tileY = Math.floor((y - boardY) / TILE_SIZE);
+        return { x:tileX, y:tileY };
+    }
+
     function setSelected(x:Int, y:Int)
     {
         var tile = getTile(x, y);
@@ -175,13 +184,13 @@ class MainScene extends Scene
 
     function processMatches()
     {
-        var sequences = new Array<Array<Pos>>();
+        var horizontal = new Array<Match>();
 
         // Horizontal matches
         for (row in 0...ROWS)
         {
             var type = -1;
-            var sequence = new Array<Pos>();
+            var sequence = new Match();
             for (col in 0...COLUMNS)
             {
                 var tile = getTile(col, row);
@@ -189,10 +198,10 @@ class MainScene extends Scene
                 {
                     if (sequence.length >= 3)
                     {
-                        sequences.push(sequence);
+                        horizontal.push(sequence);
                     }
                     type = tile.typeIdx;
-                    sequence = new Array<Pos>();
+                    sequence = new Match();
                 }
 
                 sequence.push( { x:col, y:row } );
@@ -200,16 +209,18 @@ class MainScene extends Scene
 
             if (sequence.length >= 3)
             {
-                sequences.push(sequence);
+                horizontal.push(sequence);
             }
 
         }
+
+        var vertical = new Array<Match>();
 
         // Vertical matches
         for (col in 0...COLUMNS)
         {
             var type = -1;
-            var sequence = new Array<Pos>();
+            var sequence = new Match();
             for (row in 0...ROWS)
             {
                 var tile = getTile(col, row);
@@ -217,10 +228,10 @@ class MainScene extends Scene
                 {
                     if (sequence.length >= 3)
                     {
-                        sequences.push(sequence);
+                        vertical.push(sequence);
                     }
                     type = tile.typeIdx;
-                    sequence = new Array<Pos>();
+                    sequence = new Match();
                 }
 
                 sequence.push( { x:col, y:row } );
@@ -228,10 +239,51 @@ class MainScene extends Scene
 
             if (sequence.length >= 3)
             {
-                sequences.push(sequence);
+                vertical.push(sequence);
             }
 
         }
+
+        // Merge overlapping sequences
+        var mergables = new Array<MatchMerge>();
+        for (h in horizontal)
+        {
+            for (v in vertical)
+            {
+                var h_start = h[0];
+                var h_stop = h[0].x + h.length;
+
+                var v_start = v[0];
+                var v_stop = v[0].y + v.length;
+
+                var shared_column = h_start.x <= v_start.x && v_start.x < h_stop;
+                var shared_row = v_start.y <= h_start.y && h_start.y < h_stop;
+                if (shared_column && shared_row)
+                {
+                    mergables.push( { h:h, v:v} );
+                }
+            }
+        }
+
+        for (action in mergables)
+        {
+            for (ph in action.h)
+            {
+                var found = false;
+                for (pv in action.v)
+                {
+                    found = found || (ph.x == pv.x && ph.y == pv.y);
+                }
+
+                if (!found)
+                {
+                    action.v.push(ph);
+                }
+            }
+
+            horizontal.remove(action.h);
+        }
+        var sequences = horizontal.concat(vertical);
 
         var grandTotal = 0;
 
@@ -239,7 +291,7 @@ class MainScene extends Scene
         for (sequence in sequences)
         {
             var tile = getTile(sequence[0].x, sequence[1].y);
-            if (tile != null && tile.typeIdx > 0) { ++combo; }
+            if (tile.typeIdx > 0) { ++combo; }
         }
 
         for (sequence in sequences)
@@ -248,7 +300,7 @@ class MainScene extends Scene
             for (pos in sequence)
             {
                 var tile = getTile(pos.x, pos.y);
-                if (tile != null)
+                //if (tile != null)
                 {
                     if (tile.typeIdx > 0) { points += 1; }
                     else { points -= 1; }
@@ -347,6 +399,19 @@ class MainScene extends Scene
             --waterLevel;
             water.setHeight(TILE_SIZE * waterLevel);
         }
+
+        if (Input.pressed("debug_d"))
+        {
+            var tileXY = pickTile(Input.mouseX, Input.mouseY);
+            var tile = getTile(tileXY.x, tileXY.y);
+            if (tile != null)
+            {
+                remove(tile);
+                tile = generator.createTile();
+                add(tile);
+                setTile(tileXY.x, tileXY.y, tile);
+            }
+        }
     }
 
     function updateIdle()
@@ -355,8 +420,9 @@ class MainScene extends Scene
 
         if (Input.mousePressed || (Input.mouseDown && selectedTile != null))
         {
-            var tileX = Math.floor((Input.mouseX - boardX) / TILE_SIZE);
-            var tileY = Math.floor((Input.mouseY - boardY) / TILE_SIZE);
+            var tileXY = pickTile(Input.mouseX, Input.mouseY);
+            var tileX = tileXY.x;
+            var tileY = tileXY.y;
             var dragAction = Input.mouseDown && selectedTile != null && !(tileX == selectedX && tileY == selectedY);
 
             var swapRangeX = Math.abs(tileX - selectedX);

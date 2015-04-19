@@ -16,6 +16,7 @@ class Main extends Engine
         Input.define("debug_a", [Key.DIGIT_1]);
         Input.define("debug_b", [Key.DIGIT_2]);
         Input.define("debug_c", [Key.DIGIT_3]);
+        Input.define("debug_d", [Key.DIGIT_4]);
 #end
 		HXP.scene = new MainScene();
 	}
