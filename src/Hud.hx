@@ -9,6 +9,7 @@ import com.haxepunk.graphics.Graphiclist;
 
 class Hud extends Entity
 {
+    inline static var BEATSPEED = 0.5;
 
     public var fat(default, null):Int;
 
@@ -16,12 +17,14 @@ class Hud extends Entity
     var fatBar:Bar;
     var fatBarWidth:Int;
     var heart:Image;
+    var beat:Float;
 
     public function new(maxFat:Int)
     {
         super();
         this.maxFat = maxFat;
         fat = maxFat;
+        beat = 0;
 
         var barX = 50;
         var barY = 60;
@@ -52,6 +55,11 @@ class Hud extends Entity
         updateGUI();
     }
 
+    function beatFunc(x:Float)
+    {
+        return Math.max(-Math.pow(2 * x - 1, 2) + 1, 0);
+    }
+
     function updateGUI()
     {
         var factor = 1 - (fat / maxFat);
@@ -64,4 +72,13 @@ class Hud extends Entity
         updateGUI();
     }
 
+    override public function update():Void
+    {
+        super.update();
+
+        beat += BEATSPEED * HXP.elapsed;
+        while (beat > 1) { beat -= 1; }
+        var hScale = 1 - 0.1 * beatFunc(beat * 3);
+        heart.scale = hScale;
+    }
 }
